@@ -22,7 +22,7 @@ function App() {
 <FacebookLoginButton className="mt-3 mb-3"/>
 <GoogleLoginButton className="mt-3 mb-3"/>
 <div className="text-center">
-  <a href="/sign-up">Sign up</a>
+<a href="/sign-up">Sign up</a>
 <span className="p-2">/</span>
 <a href="/forgot-password">Forgot Password</a>
 </div>
