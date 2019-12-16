@@ -2,32 +2,26 @@ import React from 'react';
 import './App.css';
 import {Button,Form,FormGroup,Label,Input} from 'reactstrap'
 import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons'
-function App() {
-  return (
-<Form className="login-form">
-  <h1 className="text-center"><span className="font-weight-bold ">Lunatechs</span>.gr</h1>
-<h2 className="text-center">Welcome</h2>
+import {BrowserRouter as Router,Route} from "react-router-dom"
+import SignUp from "./components/SignUp"
+import ForgotPass from "./components/ForgotPass"
+import MainPage from "./components/MainPage"
+class App extends React.Component {
 
-<FormGroup>
-<Label>Email</Label>
-<Input type="email" placeholder="Email"/>
-</FormGroup>
-<FormGroup>
-<Label>Password</Label>
-<Input type="password" placeholder="Password"/>
-</FormGroup>
-<Button className="btn-lg brn-dark btn-block">Login</Button>
-<div className="text-center pt-3">Or continue with your social account
+render(){
+  return (
+<div>
+
+<Router>
+<Route path="/" exact component={MainPage}/>
+<Route path="/sign-up" exact component={SignUp}/>
+<Route path="/forgot-password" exact component={ForgotPass}/>
+</Router>
 </div>
-<FacebookLoginButton className="mt-3 mb-3"/>
-<GoogleLoginButton className="mt-3 mb-3"/>
-<div className="text-center">
-<a href="/sign-up">Sign up</a>
-<span className="p-2">/</span>
-<a href="/forgot-password">Forgot Password</a>
-</div>
-</Form>
+
+
+
 );
-}
+}}
 
 export default App;
