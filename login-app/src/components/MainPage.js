@@ -1,7 +1,7 @@
 import React from "react"
 import {Button,Form,FormGroup,Label,Input} from 'reactstrap'
 import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons'
-import {Link,Redirect} from "react-router-dom"
+import {Link} from "react-router-dom"
 
 import axios from "axios";
 
@@ -9,35 +9,44 @@ class MainPage extends React.Component{
 constructor(props){
   super(props)
   this.state={
-
-    users:{username:"manos"}
+    users:{},
+    check:"false",
+    find:" "
   }
   this.handleSubmit=this.handleSubmit.bind(this)
-}
-
-checker()
-{
-  var users={ };
-  axios.get("http://localhost:5000/users/",{params: {
-    username: "asdas@asda.gt"
-  }})
-  .then(res=>console.log(res.data))
-  .catch(function(error) {
-  console.error(error);
-}
-);
-console.log("Users: "+users)
 
 }
-handleSubmit = () => {
-  this.checker();
-this.props.history.push({
-          pathname: '/login',
-          state: { user: this.state.users }})
+
+
+componentDidUpdate(){
+
+  if(this.state.check==="true"){
+  axios.get("http://localhost:5000/users/",{
+    params: {email: document.getElementById("email").value,
+            password:document.getElementById("password").value
+
+    }})
+  .then(res=>{ console.log(res.status);
+
+if(res.data.length!==0){
+    if (this._isMounted){
+  this.setState({ users: res.data[0] ,check:"false"})}
+  this.props.history.push({
+            pathname: '/login',
+            state: { user: this.state.users }})
+    }else{
+
+      this.setState({check:"false",find:"  Wrong email or password"})}
+    })
+}}
+
+componentDidMount() {
+    this._isMounted = true;
+}
+
+handleSubmit() {
+this.setState({check:"true"})
   }
-
-
-
 
   render(){
     return(
@@ -46,13 +55,13 @@ this.props.history.push({
     <h2 className="text-center">Welcome</h2>
 
     <FormGroup>
-      <Label>Email</Label>
-        <Input type="email" placeholder="Email"/>
+      <Label>Email<span class="text-danger">{this.state.find} </span></Label>
+    <Input id="email" type="email" placeholder="Email"/>
     </FormGroup>
 
     <FormGroup>
       <Label>Password</Label>
-        <Input type="password" placeholder="Password"/>
+    <Input id="password" type="password" placeholder="Password"/>
     </FormGroup>
 
     <Button type="button" onClick={this.handleSubmit} className="btn-lg brn-dark btn-block">Login</Button>

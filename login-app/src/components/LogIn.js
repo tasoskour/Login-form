@@ -1,10 +1,10 @@
 import React from "react"
-import {Link,Redirect,withRouter } from "react-router-dom"
+
 class LogIn extends React.Component {
 constructor(props){
 super(props);
 this.state={
-  user:{username:"ASd"}
+  user:{}
 }
 }
 componentDidMount(){
@@ -17,7 +17,9 @@ render(props) {
 
     return(
 <div>
-<h1> Hello {this.state.user.username} </h1>
+<h1> Welcome {this.state.user.username}  </h1>
+<p>your id is:"{this.state.user._id}"</p>
+<p>Your account created at: {this.state.user.createdAt}</p>
 </div>
 
     );

@@ -3,7 +3,7 @@ let User=require("../models/users.model");
 
 router.route('/').get((req,res)=>{
 
-User.find({  "username": req.query["username"]} )
+User.find({  "email": req.query["email"],"password":req.query["password"]} )
 .then(user=>res.json(user))
 .catch(err=>res.status(400).json('Error:'+err));
 
@@ -11,7 +11,10 @@ User.find({  "username": req.query["username"]} )
 
 router.route('/add').post((req,res)=>{
 const username=req.body.username;
-const newUser= new User({username});
+const email=req.body.email;
+const password=req.body.password;
+
+const newUser= new User({username,email,password});
 
 newUser.save()
   .then(()=>res.json('User added'))
