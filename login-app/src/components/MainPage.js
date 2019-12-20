@@ -32,11 +32,11 @@ if(res.data.length!==0){
     if (this._isMounted){
   this.setState({ users: res.data[0] ,check:"false"})}
   this.props.history.push({
-            pathname: '/login',
+            pathname: '/login'+this.state.users._id,
             state: { user: this.state.users }})
     }else{
-
-      this.setState({check:"false",find:"  Wrong email or password"})}
+  if (this._isMounted){
+      this.setState({check:"false",find:"  Wrong email or password"})}}
     })
 }}
 
@@ -44,33 +44,39 @@ componentDidMount() {
     this._isMounted = true;
 }
 
-handleSubmit() {
+handleSubmit(e) {
+  e.preventDefault()
 this.setState({check:"true"})
   }
 
   render(){
     return(
-  <Form className="login-form">
+      <div>
+  <Form className="login-form" onSubmit={(e)=>this.handleSubmit(e)}>
     <h1 className="text-center"><span className="font-weight-bold ">Lunatechs</span>.gr</h1>
     <h2 className="text-center">Welcome</h2>
 
     <FormGroup>
-      <Label>Email<span class="text-danger">{this.state.find} </span></Label>
+      <Label>Email<span className="text-danger">{this.state.find} </span></Label>
     <Input id="email" type="email" placeholder="Email"/>
     </FormGroup>
+
 
     <FormGroup>
       <Label>Password</Label>
     <Input id="password" type="password" placeholder="Password"/>
     </FormGroup>
 
-    <Button type="button" onClick={this.handleSubmit} className="btn-lg brn-dark btn-block">Login</Button>
+    <Button   className="btn-lg brn-dark btn-block">Login</Button>
 
+</Form>
 
-    <div className="text-center pt-3">Or continue with your social account  </div>
+<div className="text-center pt-3">Or continue with your social account  </div>
 
-    <FacebookLoginButton className="mt-3 mb-3"/>
-    <GoogleLoginButton className="mt-3 mb-3"/>
+<Form className="login-form" >
+
+  <FacebookLoginButton  type="button" className="mt-3 mb-3"/>
+    <GoogleLoginButton  className="mt-3 mb-3"/>
 
     <div className="text-center">
       <Link to="/sign-up" className="navbar-brand">Sign up</Link>
@@ -78,7 +84,7 @@ this.setState({check:"true"})
       <Link to="/forgot-password" className="navbar-brand">Forgot Password</Link>
     </div>
   </Form>
-
+</div>
     )
   }
 }

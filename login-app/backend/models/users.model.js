@@ -13,15 +13,16 @@ username:{
  email:{
    type: String,
    required:true,
-   trim:true,
    unique:true,
+   trim:true,
+   dropDups: true
+
  },
 password:{
   type: String,
   required:true,
   trim:true,
   minlength:4
-
  }
 },
 {
