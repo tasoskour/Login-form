@@ -5,13 +5,14 @@ import {Link} from "react-router-dom"
 
 import axios from "axios";
 
-class MainPage extends React.Component{
+class MainLoginPage extends React.Component{
 constructor(props){
   super(props)
   this.state={
     users:{},
-    check:"false",
-    find:" "
+    submit:"false",
+    wrongMsg:" "
+
   }
   this.handleSubmit=this.handleSubmit.bind(this)
 
@@ -19,8 +20,7 @@ constructor(props){
 
 
 componentDidUpdate(){
-
-  if(this.state.check==="true"){
+  if(this.state.submit==="true"){
   axios.get("http://localhost:5000/users/",{
     params: {email: document.getElementById("email").value,
             password:document.getElementById("password").value
@@ -28,15 +28,15 @@ componentDidUpdate(){
     }})
   .then(res=>{ console.log(res.status);
 
-if(res.data.length!==0){
+  if(res.data.length!==0){
     if (this._isMounted){
-  this.setState({ users: res.data[0] ,check:"false"})}
-  this.props.history.push({
+      this.setState({ users: res.data[0] ,submit:"false"})}
+      this.props.history.push({
             pathname: '/login'+this.state.users._id,
-            state: { user: this.state.users }})
+            state: { user: this.state.users}})
     }else{
   if (this._isMounted){
-      this.setState({check:"false",find:"  Wrong email or password"})}}
+      this.setState({submit:"false",wrongMsg:"  Wrong email or password"})}}
     })
 }}
 
@@ -46,7 +46,7 @@ componentDidMount() {
 
 handleSubmit(e) {
   e.preventDefault()
-this.setState({check:"true"})
+this.setState({submit:"true"})
   }
 
   render(){
@@ -57,7 +57,7 @@ this.setState({check:"true"})
     <h2 className="text-center">Welcome</h2>
 
     <FormGroup>
-      <Label>Email<span className="text-danger">{this.state.find} </span></Label>
+      <Label>Email<span className="text-danger">{this.state.wrongMsg} </span></Label>
     <Input id="email" type="email" placeholder="Email"/>
     </FormGroup>
 
@@ -88,4 +88,4 @@ this.setState({check:"true"})
     )
   }
 }
-export default MainPage
+export default MainLoginPage
