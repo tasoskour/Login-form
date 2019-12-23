@@ -18,7 +18,7 @@ const newUser= new User({username,email,password});
 
 newUser.save()
   .then(()=>res.json('User added'))
-  .catch(err=>res.json('Error'+err))
+  .catch(err=>res.json('Error'+err.code))
 });
 
 module.exports=router;

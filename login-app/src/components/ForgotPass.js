@@ -4,7 +4,7 @@ class ForgotPass extends React.Component{
 
   render() {
   return(
-    <h1>UnDone</h1>
+    <h1>Under Construction</h1>
   );
 }
 }

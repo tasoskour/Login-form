@@ -1,8 +1,6 @@
 import React from "react"
 import Error404 from "../components/Error404"
-import MainPage from "./mainComponents/MainPage"
-import {Route,Redirect,Switch,NavLink} from "react-router-dom"
-import Account from "./mainComponents/Account"
+import {NavLink} from "react-router-dom"
 import {Navbar,Nav,Button} from 'reactstrap';
 
 class LoggedIn extends React.Component {

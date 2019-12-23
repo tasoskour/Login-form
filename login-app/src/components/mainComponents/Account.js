@@ -1,5 +1,5 @@
 import React from "react";
-import MainPage from "./MainPage"
+
 
 class Account extends React.Component {
   constructor(props){

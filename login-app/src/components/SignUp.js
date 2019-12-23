@@ -10,7 +10,10 @@ this.state={
   email:"",
   password:" ",
   confirmPassword:" ",
-  wrongPasswordMsg:""
+  wrongPasswordMsg:"",
+  msgs:{ wrongPasswordMsg:"",
+        created:"",
+        smallNameMsg:"",    }
 }
 this.getUsername=this.getUsername.bind(this);
 this.getEmail=this.getEmail.bind(this);
@@ -40,23 +43,30 @@ const user={username:this.state.username,
             password:this.state.password,
            }
 let confirmPassword=this.state.confirmPassword
-if(user.username.length>=3||user.email.length>1){
+if(user.username.length>=3&&user.email.length>1){
+  this.setState({msgs:{  smallNameMsg:""}})
 if(confirmPassword===user.password){
-  this.setState({wrongPasswordMsg:""})
+  this.setState({msgs:{wrongPasswordMsg:" "}})
 axios.post("http://localhost:5000/users/add",user)
 .then(res=>{console.log("Data:"+res.data)
-  if(res.data.code==="Error11000"){
+  if(res.data==='User added'){this.setState({msgs:{  created:"User created succesfully"}})}
+  else if(res.data==="Error11000"){this.setState({msgs:{  created:"User already exists"}})}
 
-    console.log("Data1:"+res.data.code)
-  }
 })
 
 //window.location='/';
 }else{
-  this.setState({wrongPasswordMsg:"Password doesn't match"})
-}}
-else(console.log("Username at least 3 chars"))
-
+  this.setState( {
+    msgs:{wrongPasswordMsg:"Password doesn't match"}})
+    }}
+else {
+  if(user.email.length<1){
+  this.setState({msgs:{  smallNameMsg:"Please enter your e-mail address"}})
+  }
+  if(user.username.length<3){
+    console.log(user.username.length)
+  this.setState({msgs:{  smallNameMsg:"Username have to be at least 3 chars"}})}
+  }
 }
 
 
@@ -72,7 +82,7 @@ else(console.log("Username at least 3 chars"))
   <Form className="login-form font-weight-bold" onSubmit={this.onSubmit}>
 
     <FormGroup >
-    <Label>Username</Label>
+    <Label>Username <small className="text-danger ">{this.state.msgs.smallNameMsg} </small></Label>
     <Input type="text" onChange={this.getUsername} placeholder="Username"/>
     </FormGroup>
 
@@ -87,12 +97,12 @@ else(console.log("Username at least 3 chars"))
    </FormGroup>
 
    <FormGroup>
-   <Label>Repeat Password <small className="text-danger ">{this.state.wrongPasswordMsg} </small></Label>
+   <Label>Repeat Password <small className="text-danger ">{this.state.msgs.wrongPasswordMsg} </small></Label>
     <Input type="password" placeholder="Password" onChange={this.getPassword2}/>
    </FormGroup>
 
    <Button className="btn-lg brn-dark btn-block">Sign Up</Button>
-
+   <small className="text-danger ">{this.state.msgs.created}</small>
   </Form>
 </div>
 )
