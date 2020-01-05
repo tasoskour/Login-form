@@ -16,7 +16,7 @@ mongoose.connect(uri,
 const connection=mongoose.connection;
 console.log("Connection...");
 
-//once will call the provided callback only one time on will call the provided callback each time an open event occurs
+//once :will call the provided callback only one time, on: will call the provided callback each time an open event occurs
 connection.once('open',()=>{
   console.log("Connection to mongodb successfull")
 });

@@ -14,16 +14,23 @@ class Account extends React.Component {
 }
 
   render(){
+
+    if(window.location.pathname!=="/loginguest/account"){
+    var user=this.state.user
+
     return(
+
       <div>
-      <h1> Welcome {this.state.user.username}  </h1>
-      <p>your id is:{this.state.user._id}</p>
-      <p>Your account created at: {this.state.user.createdAt}</p>
+      <h1> Welcome {user.username}  </h1>
+      <p>your id is:{user._id}</p>
+      <p>Your account created at: {user.createdAt}</p>
       </div>
 
 
     )
   }
+else {return (<h1>Logged out</h1>)}
+}
 
 }
 export default Account

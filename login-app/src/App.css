@@ -24,3 +24,14 @@ padding: 15px;
 margin:auto;
 height: 100%;
 }
+.fa{margin-right:20px;}
+
+.fb-btn{
+  background: #3B5998;
+  color: white;
+ margin: 5px 2px;
+}
+.button .googlebtn {
+  font-size:200px;
+border:none;
+text-align:center ;}
