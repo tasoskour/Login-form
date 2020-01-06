@@ -1,6 +1,5 @@
 import React from "react"
 import {Button,Form,FormGroup,Label,Input} from 'reactstrap'
-import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons'
 import {Link} from "react-router-dom"
 import axios from "axios";
 import FacebookLogin from 'react-facebook-login'
@@ -37,15 +36,15 @@ componentDidUpdate(){
 componentDidMount() {this._isMounted = true;}
 
 responseFacebook(response){
-    var fbuser={username:response.name,
+    var fbuser={
+      username:response.name,
       email:response.email,
-                _id:response.id}
+      _id:response.id}
   this.setState({ users: fbuser ,submit:false,loggedIn:true})
   this.props.history.push({pathname: '/login'+this.state.users._id,
                            state:{  user: this.state.users,
                                     loggedIn:this.state.loggedIn}});
 }
-
 
 handleSubmit(e) {
   e.preventDefault()

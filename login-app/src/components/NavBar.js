@@ -10,11 +10,12 @@ return(
       <Nav className="mr-auto">
         <NavLink className="nav-link"  to={"./main"}>Home</NavLink>
         <NavLink className="nav-link" to={"./coll"}>Collection</NavLink>
-        <NavLink className="nav-link" to={"./photogal"}>Reviews</NavLink>
+        <NavLink className="nav-link" to={"./photogal"}>My Gallery</NavLink>
       </Nav>
       <Nav className="nav navbar-right">
-        <Button    className="m-2"  onClick={props.account} > {props.username} Account</Button>
-        <Button    className="m-2"   onClick={props.logOut}> {props.logged}</Button>
+        <Button    className="m-2 accountButton"  disabled={props.disabled}
+         onClick={props.account} color={props.btnColor}> {props.username}  </Button>
+        <Button    className="m-2"  onClick={props.logOut}> {props.logged}</Button>
       </Nav>
     </Navbar>
     <br />
