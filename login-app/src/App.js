@@ -9,7 +9,7 @@ import Error404 from "./components/Error404"
 import Account from "./components/mainComponents/Account"
 import MainPage from "./components/mainComponents/MainPage"
 import Collection from "./components/mainComponents/Collection"
-import Reviews from "./components/mainComponents/Reviews"
+import PhotoGallery from "./components/mainComponents/PhotoGallery"
 
 
 
@@ -29,7 +29,7 @@ render(){
   <Route path="/login:id/account" exact component={Account}/>
     <Route path={"/login:id/main"} component={MainPage}/>
     <Route path={"/login:id/coll"} component={Collection}/>
-    <Route path={"/login:id/reviews"} component={Reviews}/>
+    <Route path={"/login:id/photogal"} component={PhotoGallery}/>
 </Route>
 <Route component={Error404}/>
   </Switch>
