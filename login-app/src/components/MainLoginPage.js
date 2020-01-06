@@ -4,7 +4,7 @@ import {FacebookLoginButton,GoogleLoginButton} from 'react-social-login-buttons'
 import {Link} from "react-router-dom"
 import axios from "axios";
 import FacebookLogin from 'react-facebook-login'
-import GoogleLogin from 'react-google-login';
+
 
 class MainLoginPage extends React.Component{
   constructor(props){
@@ -16,6 +16,7 @@ class MainLoginPage extends React.Component{
     loggedIn:false}
 
     this.handleSubmit=this.handleSubmit.bind(this)
+    this.responseFacebook=this.responseFacebook.bind(this)
   }
 
 componentDidUpdate(){
@@ -26,23 +27,31 @@ componentDidUpdate(){
     .then(res=>{if(res.data.length!==0&&this._isMounted){
                  this.setState({ users: res.data[0] ,submit:false,loggedIn:true})
                  this.props.history.push({pathname: '/login'+this.state.users._id,
-                                          state:{  user: this.state.users,loggedIn:this.state.loggedIn}});}
-                else{if (this._isMounted){this.setState({submit:false,wrongMsg:"  Wrong email or password"})}}});
-  }}
+                                          state:{user: this.state.users,
+                                                 loggedIn:this.state.loggedIn}});}
+                else{if (this._isMounted){
+                  this.setState({submit:false,wrongMsg:"  Wrong email or password"})
+                }}});}
+      }
 
 componentDidMount() {this._isMounted = true;}
+
+responseFacebook(response){
+    var fbuser={username:response.name,
+      email:response.email,
+                _id:response.id}
+  this.setState({ users: fbuser ,submit:false,loggedIn:true})
+  this.props.history.push({pathname: '/login'+this.state.users._id,
+                           state:{  user: this.state.users,
+                                    loggedIn:this.state.loggedIn}});
+}
+
 
 handleSubmit(e) {
   e.preventDefault()
   this.setState({submit:true})}
 
 render(){
-  const responseFacebook = (response) => {
-    console.log(response) }
-
-  const responseGoogle = (response) => {
-      console.log(response.profileObj.givenName);
-    }
 
 
   return(
@@ -62,35 +71,30 @@ render(){
       </FormGroup>
       <div className="text-center">
       <Button   className="btn-lg btn-block">Login</Button>
-
+      </div>
+      <div className="pl-4">
+      <Link to="/sign-up" className="navbar-brand mr-0 p-2">Sign up</Link>
+        <span className="pr-2">/</span>
+      <Link to="/forgot-password" className="navbar-brand">Forgot Password</Link>
       </div>
     </Form>
 
-    <div className="text-center pt-3">Or continue with your social account  </div>
+    <div className="text-center ">Or continue with Facebook  </div>
 
     <Form  className="login-form" >
 
       <FacebookLogin
         appId="1463519250482931"
         fields="name,email,picture"
-        callback={responseFacebook}
+        callback={this.responseFacebook}
         cssClass="fb-btn btn-lg btn-block"
         icon=" fa fa-facebook "
-
       />
 
-    <GoogleLogin
-        clientId="1064846211663-hgcfh2mvklrle47eo1do4bvaa87ctpc8.apps.googleusercontent.com"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        className="btn-block googlebtn"
-     />
 
       <div className="text-center">
-        <Link to="/sign-up" className="navbar-brand">Sign up</Link>
-          <span className="p-2">/</span>
-        <Link to="/forgot-password" className="navbar-brand">Forgot Password</Link>
-        <Link to="/loginguest/main"  className="btn-lg btn-dark btn-block">Continue as Guest</Link>
+
+        <Link to="/loginguest/main"  className="btn-lg">Continue as Guest</Link>
       </div>
     </Form>
   </div>);
