@@ -40,11 +40,12 @@ responseFacebook(response){
       username:response.name,
       email:response.email,
       _id:response.id}
+      if(response.status!=="unknown"){
   this.setState({ users: fbuser ,submit:false,loggedIn:true})
   this.props.history.push({pathname: '/login'+this.state.users._id,
                            state:{  user: this.state.users,
                                     loggedIn:this.state.loggedIn}});
-}
+}}
 
 handleSubmit(e) {
   e.preventDefault()
@@ -89,10 +90,7 @@ render(){
         cssClass="fb-btn btn-lg btn-block"
         icon=" fa fa-facebook "
       />
-
-
       <div className="text-center">
-
         <Link to="/loginguest/main"  className="btn-lg">Continue as Guest</Link>
       </div>
     </Form>
